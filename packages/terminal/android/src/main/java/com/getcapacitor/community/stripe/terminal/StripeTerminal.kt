@@ -30,6 +30,7 @@ import com.stripe.stripeterminal.external.callable.ReaderCallback
 import com.stripe.stripeterminal.external.callable.TapToPayReaderListener
 import com.stripe.stripeterminal.external.callable.TerminalListener
 import com.stripe.stripeterminal.external.callable.HandoffReaderListener
+import com.stripe.stripeterminal.external.models.AllowRedisplay
 import com.stripe.stripeterminal.external.models.BatteryStatus
 import com.stripe.stripeterminal.external.models.CardPresentDetails
 import com.stripe.stripeterminal.external.models.Cart
@@ -540,7 +541,7 @@ class StripeTerminal(
         object : PaymentIntentCallback {
             override fun onSuccess(paymentIntent: PaymentIntent) {
                 val collectConfig: CollectConfiguration =
-                    CollectConfiguration.Builder().updatePaymentIntent(true).build()
+                    CollectConfiguration.Builder().setAllowRedisplay(AllowRedisplay.ALWAYS).updatePaymentIntent(true).build()
                 collectCancelable = Terminal.getInstance().collectPaymentMethod(
                     paymentIntent,
                     collectPaymentMethodCallback,
